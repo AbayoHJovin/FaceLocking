@@ -1,0 +1,14 @@
+[11:19:15.617] LOCK_START: System locked onto Jovin
+[11:19:18.666] MOVE: Moved Left
+[11:19:21.697] MOVE: Moved Left
+[11:19:22.418] MOVE: Moved Right
+[11:19:22.818] MOVE: Moved Right
+[11:19:33.381] EXPRESSION: Smile/Laugh detected
+[11:19:39.961] MOVE: Moved Left
+[11:19:41.029] BLINK: Eye blink detected
+[11:19:41.447] MOVE: Moved Right
+[11:19:46.056] MOVE: Moved Left
+[11:19:46.082] BLINK: Eye blink detected
+[11:19:46.436] MOVE: Moved Left
+[11:19:46.799] MOVE: Moved Left
+[11:19:52.209] LOCK_RELEASE: Face lost for too long

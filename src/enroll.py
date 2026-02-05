@@ -30,7 +30,7 @@ from typing import Dict, List, Optional
 import cv2
 import numpy as np
 
-from .haar_5pt import Haar5ptDetector, align_face_5pt
+from .haar_5pt import HaarFivePointDetector as Haar5ptDetector, warp_face_5pt as align_face_5pt
 from .embed import ArcFaceEmbedderONNX
 
 # -------------------------
@@ -179,7 +179,7 @@ def main():
         print("No name provided. Exiting.")
         return
 
-    det = Haar5ptDetector(min_size=(70, 70), smooth_alpha=0.80, debug=False)
+    det = Haar5ptDetector(min_face_size=(70, 70), smoothing=0.80, verbose=False)
     emb = ArcFaceEmbedderONNX(
         model_path="models/arcface.onnx",
         input_size=(112, 112),
@@ -204,7 +204,7 @@ def main():
     auto = False
     last_auto = 0.0
 
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     if not cap.isOpened():
         raise RuntimeError("Failed to open camera.")
 
@@ -236,11 +236,11 @@ def main():
             if faces:
                 f = faces[0]
 
-                cv2.rectangle(vis, (f.x1, f.y1), (f.x2, f.y2), (0, 255, 0), 2)
-                for (x, y) in f.kps.astype(int):
+                cv2.rectangle(vis, (f.x_min, f.y_min), (f.x_max, f.y_max), (0, 255, 0), 2)
+                for (x, y) in f.landmarks.astype(int):
                     cv2.circle(vis, (int(x), int(y)), 3, (0, 255, 0), -1)
 
-                aligned, _ = align_face_5pt(frame, f.kps, out_size=(112, 112))
+                aligned, _ = align_face_5pt(frame, f.landmarks, output_size=(112, 112))
                 cv2.imshow(cfg.window_aligned, aligned)
             else:
                 cv2.imshow(

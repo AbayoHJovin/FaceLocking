@@ -23,7 +23,7 @@ import cv2
 import numpy as np
 
 # Import from your existing script
-from .haar_5pt import Haar5ptDetector, align_face_5pt
+from .haar_5pt import HaarFivePointDetector as Haar5ptDetector, warp_face_5pt as align_face_5pt
 
 def _put_text(img, text: str, xy=(10, 30), scale=0.8, thickness=2):
     cv2.putText(img, text, xy, cv2.FONT_HERSHEY_SIMPLEX, scale, (255, 255, 255), thickness, cv2.LINE_AA)
@@ -34,15 +34,15 @@ def _safe_imshow(win: str, img: np.ndarray):
     cv2.imshow(win, img)
 
 def main(
-    cam_index: int = 0,
+    cam_index: int = 1,
     out_size: Tuple[int, int] = (112, 112),
     mirror: bool = True,
 ):
     cap = cv2.VideoCapture(cam_index)
     det = Haar5ptDetector(
-        min_size=(70, 70),
-        smooth_alpha=0.80,
-        debug=True,
+        min_face_size=(70, 70),
+        smoothing=0.80,
+        verbose=True,
     )
     out_w, out_h = int(out_size[0]), int(out_size[1])
     blank = np.zeros((out_h, out_w, 3), dtype=np.uint8)
@@ -70,12 +70,12 @@ def main(
             f = faces[0]
             
             # Draw box + 5 pts
-            cv2.rectangle(vis, (f.x1, f.y1), (f.x2, f.y2), (0, 255, 0), 2)
-            for (x, y) in f.kps.astype(int):
+            cv2.rectangle(vis, (f.x_min, f.y_min), (f.x_max, f.y_max), (0, 255, 0), 2)
+            for (x, y) in f.landmarks.astype(int):
                 cv2.circle(vis, (int(x), int(y)), 3, (0, 255, 0), -1)
                 
             # Align (this is the whole point)
-            aligned, _M = align_face_5pt(frame, f.kps, out_size=out_size)
+            aligned, _M = align_face_5pt(frame, f.landmarks, output_size=out_size)
             
             # Keep last good aligned (so window doesn't go black on brief misses)
             if aligned is not None and aligned.size:

@@ -32,7 +32,7 @@ except Exception as e:
     mp = None
     _MP_IMPORT_ERROR = e
 
-from .haar_5pt import align_face_5pt
+from .haar_5pt import warp_face_5pt as align_face_5pt
 
 # -------------------------
 # Data
@@ -263,7 +263,7 @@ def main():
     embedder = ArcFaceEmbedderONNX()
     matcher = FaceDBMatcher(load_db_npz(db_path), dist_thresh=0.34)
 
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     if not cap.isOpened():
         raise RuntimeError("Camera not available")
 
@@ -279,7 +279,7 @@ def main():
         faces = det.detect(frame)
 
         for f in faces:
-            aligned, _ = align_face_5pt(frame, f.kps, out_size=(112, 112))
+            aligned, _ = align_face_5pt(frame, f.kps, output_size=(112, 112))
             emb = embedder.embed(aligned)
             mr = matcher.match(emb)
 

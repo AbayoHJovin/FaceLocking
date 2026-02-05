@@ -27,7 +27,6 @@ except Exception as err:
     mp = None
     _MP_ERR = err
 
-
 # =========================
 # Structures
 # =========================
@@ -175,13 +174,11 @@ class HaarFivePointDetector:
         self.cascade = cv2.CascadeClassifier(cascade_path)
         if self.cascade.empty():
             raise RuntimeError(f"Unable to load Haar cascade: {cascade_path}")
-
         if mp is None:
             raise RuntimeError(
                 f"MediaPipe failed to import: {_MP_ERR}\n"
                 f"Install with: pip install mediapipe==0.10.21"
-            )
-
+            )   
         self.mesh = mp.solutions.face_mesh.FaceMesh(
             static_image_mode=False,
             max_num_faces=1,
@@ -293,7 +290,7 @@ class HaarFivePointDetector:
 # =========================
 
 def main():
-    cam = cv2.VideoCapture(0)
+    cam = cv2.VideoCapture(1)
     detector = HaarFivePointDetector(min_face_size=(70, 70), smoothing=0.80, verbose=True)
 
     print("Haar + 5-point FaceMesh demo. Press 'q' to exit.")
