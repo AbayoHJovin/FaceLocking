@@ -8,7 +8,7 @@ def run():
     if detector.empty():
         raise RuntimeError(f"Unable to load Haar cascade from {haar_file}")
 
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(1)
     if not camera.isOpened():
         raise RuntimeError("Could not access camera. Try index 0, 1, or 2.")
 

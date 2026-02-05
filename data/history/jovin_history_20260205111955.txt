@@ -1,0 +1,3 @@
+[11:19:55.294] LOCK_START: System locked onto Jovin
+[11:19:55.303] MOVE: Moved Right
+[11:19:58.294] LOCK_RELEASE: Face lost for too long

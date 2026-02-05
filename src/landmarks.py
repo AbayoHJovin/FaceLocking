@@ -39,7 +39,7 @@ def run():
         min_tracking_confidence=0.5,
     )
 
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(1)
     if not camera.isOpened():
         raise RuntimeError("Failed to access camera. Try another index.")
 

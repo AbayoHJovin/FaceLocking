@@ -1,0 +1,9 @@
+[11:22:03.363] LOCK_START: System locked onto Jovin
+[11:22:12.620] BLINK: Eye blink detected
+[11:22:13.702] MOVE: Moved Left
+[11:22:14.079] MOVE: Moved Left
+[11:22:16.861] MOVE: Moved Left
+[11:22:20.816] BLINK: Eye blink detected
+[11:22:23.330] EXPRESSION: Smile/Laugh detected
+[11:22:24.462] BLINK: Eye blink detected
+[11:22:25.677] BLINK: Eye blink detected
